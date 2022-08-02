@@ -1,5 +1,4 @@
 require("dotenv").config();
-const { token } = process.env;
 const {
   Client,
   Collection,
@@ -25,4 +24,4 @@ for (const folder of functionFolders) {
 client.handleEvents();
 client.handleCommands();
 //client.handleComponents();
-client.login(token);
+client.login(process.env.TOKEN);
