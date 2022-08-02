@@ -23,7 +23,7 @@ module.exports = (client) => {
     }
     const clientId = "1002313964757192854";
     const guildId = "723237557009252404";
-    const rest = new REST({ version: 9 }).setToken(process.env.token);
+    const rest = new REST({ version: 9 }).setToken(process.env.TOKEN);
     try {
       console.log("Started refreshing application (/) commands.");
 
