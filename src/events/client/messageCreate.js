@@ -84,7 +84,7 @@ module.exports = {
               ephemeral: false,
             });
             client.channels.cache
-              .get("1003674609431887894")
+              .get("899445608744628264")
               .send({ embeds: [embed] });
           }
         }
