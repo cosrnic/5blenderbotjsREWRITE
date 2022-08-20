@@ -13,7 +13,7 @@ module.exports = {
 			fetchReply: true,
 		});
 		const channel = client.channels.cache.find(
-			(channel) => channel.id === "1003674584303816714"
+			(channel) => channel.id === "886042189782745109"
 		);
 		const guild = interaction.guild;
 		const everyone = guild.roles.everyone;
