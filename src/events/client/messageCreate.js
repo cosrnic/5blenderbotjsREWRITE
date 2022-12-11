@@ -114,6 +114,10 @@ module.exports = {
                                 message.member,
                                 "Slowmode expired"
                             );
+                            // console.log("slowmode expired");
+                            message.author.send(
+                                `Your <#${process.env.DRIVE_REQUESTS}> cooldown has expired! Make sure to remember the rules when requesting!`
+                            );
                         }, supporterDuration);
 
                         message.channel.permissionOverwrites
@@ -136,6 +140,10 @@ module.exports = {
                             message.channel.permissionOverwrites.delete(
                                 message.member,
                                 "Slowmode expired"
+                            );
+                            // console.log("slowmode expired");
+                            message.author.send(
+                                `Your <#${process.env.DRIVE_REQUESTS}> cooldown has expired! Make sure to remember the rules when requesting!`
                             );
                         }, normalDuration);
                         message.channel.permissionOverwrites
