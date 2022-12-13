@@ -41,7 +41,9 @@ module.exports = {
         //     console.log(data);
         // });
 
-        const input = interaction.options.getString("name");
+        let input = interaction.options.getString("name");
+
+        input = input.replaceAll("'", "\\'");
 
         if (interaction.channel == null) {
             // fs.writeFile(
