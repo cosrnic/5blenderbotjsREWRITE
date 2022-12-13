@@ -124,6 +124,8 @@ module.exports = {
             params.orderBy = "name";
             const newParams = {};
             newParams.orderBy = "name";
+            const newerParams = {};
+            newerParams.orderBy = "name";
             // const extraParams = {};
             // extraParams.orderBy = "name";
             const array = [];
@@ -151,6 +153,8 @@ module.exports = {
                 fetchReply: true,
             });
 
+            let desc;
+
             const ogRes = await drive.files.list(params);
             // fileCount = ogRes.data.files.length;
             // console.log(ogRes.data.files.length);
@@ -158,12 +162,69 @@ module.exports = {
                 folderID = ogRes.data.files[i].id;
                 folderName = ogRes.data.files[i].name;
                 embed.setTitle("Currently Searching");
-                const desc =
-                    "Currently looking in the " + folderName + " folder.";
+                desc = "Currently looking in the " + folderName + " folder.";
                 embed.setDescription(desc);
                 interaction.editReply({
                     embeds: [embed],
                 });
+
+                if (
+                    folderID == "1E3Hqo3iOhmqAx5AjmqlyN2dT0siA50Qh" ||
+                    folderID == "1bx-E-3m6TvXl0C6YNRku_U3rzH7LCmt8"
+                ) {
+                    console.log("in special case folders");
+                    newParams.q = `'${folderID}' in parents`;
+                    const res = await drive.files.list(newParams);
+                    // const countres = await drive.files.list(extraParams);
+                    // for (let k = 0; k < countres.data.files.length; k++) {
+                    //     fileCount = fileCount + countres.data.files.length;
+                    //     console.log(folderName, countres.data.files.length);
+                    // }
+
+                    for (let j = 0; j < res.data.files.length; j++) {
+                        folderID = res.data.files[j].id;
+                        folderName = res.data.files[j].name;
+
+                        desc =
+                            "Currently looking in the " +
+                            folderName +
+                            " folder [inside " +
+                            ogRes.data.files[i].name +
+                            " folder].";
+                        embed.setDescription(desc);
+                        interaction.editReply({
+                            embeds: [embed],
+                        });
+
+                        newerParams.q = `'${folderID}' in parents and name contains '${input}'`;
+                        const res2 = await drive.files.list(newerParams);
+                        for (let k = 0; k < res2.data.files.length; k++) {
+                            if (array.length < reqlimit) {
+                                console.log(res2.data.files[k]);
+                                console.log(res.data.files[j]);
+                                embed.addFields({
+                                    name: `Found: ${res2.data.files[k].name}`,
+                                    value: `Folder: ${res.data.files[j].name} [inside ${ogRes.data.files[i].name} folder]`,
+                                });
+                                embed.setAuthor({
+                                    name: "I am still looking for more models",
+                                });
+                                array[count] =
+                                    count +
+                                    1 +
+                                    ". " +
+                                    res2.data.files[k].name +
+                                    " [[Download]](https://drive.google.com/uc?id=" +
+                                    res2.data.files[k].id +
+                                    "&export=download) | [[Folder]](https://drive.google.com/drive/folders/" +
+                                    res.data.files[j].id +
+                                    ")";
+                                count = count + 1;
+                            }
+                        }
+                    }
+                    continue;
+                }
                 // extraParams.q = `'${folderID}' in parents`;
                 newParams.q = `'${folderID}' in parents and name contains '${input}'`;
                 try {
