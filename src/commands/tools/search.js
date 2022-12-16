@@ -76,6 +76,32 @@ module.exports = {
             return;
         }
 
+        if (interaction.channel == process.env.OLD_BOT_COMMANDS) {
+            const embed = new EmbedBuilder()
+                .setTitle("Channel is Deprecated.")
+                .setDescription(
+                    `This channel is no longer supported. Please use the new channel <#${process.env.BOT_COMMANDS}>!`
+                )
+                .setFooter({
+                    text:
+                        "Created by " +
+                        (await client.users.fetch(process.env.COSMIC))
+                            .username +
+                        "#" +
+                        (await client.users.fetch(process.env.COSMIC))
+                            .discriminator,
+                    iconURL: (
+                        await client.users.fetch(process.env.COSMIC)
+                    ).avatarURL(),
+                })
+                .setColor(client.colour);
+            interaction.reply({
+                embeds: [embed],
+                ephemeral: true,
+            });
+            return;
+        }
+
         if (
             interaction.channel != null &&
             !(interaction.channel.id == process.env.BOT_COMMANDS) &&
